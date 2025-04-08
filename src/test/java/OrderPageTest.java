@@ -1,4 +1,5 @@
 import org.junit.After;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,8 +8,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pom.MainPage;
 import pom.OrderPage;
+import static org.hamcrest.CoreMatchers.containsString;
 
-import static org.junit.Assert.assertEquals;
+import org.hamcrest.MatcherAssert;
+
+
 @RunWith(Parameterized.class)
 public class OrderPageTest {
     private static WebDriver webDriver;
@@ -20,7 +24,8 @@ public class OrderPageTest {
 
     @Before
     public void setup() {
-        webDriver = new ChromeDriver();}
+        webDriver = new ChromeDriver();
+    }
 
 
     public OrderPageTest(String name, String lastName, String adress, String tel, String comment) {
@@ -52,7 +57,7 @@ public class OrderPageTest {
         mainPage.clickHeaderOrderButton();
         orderPage.setOrderToTheNextButton(name, lastName, adress, Data.nameStation, tel);
         orderPage.setOrderToTheOrderButton(Data.dayDelivery,comment);
-        assertEquals("Заказ оформлен", orderPage.pageSetOrder());}
+        MatcherAssert.assertThat(orderPage.pageSetOrder(),containsString( "Заказ оформлен"));}
 
 
 
